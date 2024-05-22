@@ -12,7 +12,7 @@ import { db } from "../../firebase";
 import { getTransactions } from "@/store/reducers/transactions-slice";
 
 const Layout = ({ children }: any) => {
-  const storedUser = sessionStorage ? sessionStorage.getItem("user") : null;
+  const storedUser = localStorage.getItem("user");
   const loggedUser = storedUser ? JSON.parse(storedUser) : null;
   const dispatch = useAppDispatch();
 

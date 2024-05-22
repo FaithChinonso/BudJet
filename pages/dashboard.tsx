@@ -7,9 +7,7 @@ import {
   SimpleGrid,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import { Modal, ModalOverlay } from "@chakra-ui/react";
-
 import Layout from "@/components/Layout";
 import { AddIcon } from "@chakra-ui/icons";
 import DataFilterTable from "@/components/Table";
@@ -20,7 +18,7 @@ import { useAppSelector } from "@/store";
 import { formatNumberWithCommas } from "@/helpers";
 
 const Dashboard = () => {
-  const storedUser = sessionStorage ? sessionStorage.getItem("user") : null;
+  const storedUser = localStorage.getItem("user");
   const loggedUser = storedUser ? JSON.parse(storedUser) : null;
   const [isEdit, setIsEdit] = useState(false);
   const [editId, setEditId] = useState("");
@@ -53,14 +51,14 @@ const Dashboard = () => {
       const newData = {
         ...data,
         id: idd.toString(),
-        userId: loggedUser.userId,
+        userId: loggedUser?.userId,
       };
       console.log(newData);
       await setDoc(doc(db, "transactions", newData.id), newData);
     } else {
       await updateDoc(doc(db, "transactions", editId), {
         ...data,
-        userId: loggedUser.userId,
+        userId: loggedUser?.userId,
       });
     }
     await onClose();

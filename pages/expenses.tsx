@@ -22,7 +22,7 @@ const Expenses = () => {
   const [editId, setEditId] = useState("");
   const { debit } = useAppSelector((state) => state.transactions);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const storedUser = sessionStorage ? sessionStorage.getItem("user") : null;
+  const storedUser = localStorage.getItem("user");
   const loggedUser = storedUser ? JSON.parse(storedUser) : null;
   const [data, setData] = useState({
     name: "",

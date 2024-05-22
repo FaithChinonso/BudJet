@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isVerifyRoute = router?.pathname === "/";

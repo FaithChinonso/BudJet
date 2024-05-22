@@ -12,8 +12,8 @@ const userSlice = createSlice({
     getUser: (state, action: PayloadAction<any>) => {
       console.log(action.payload);
       state.user = action.payload;
-      sessionStorage.setItem("user", JSON.stringify(action?.payload));
-      sessionStorage.setItem("token", action.payload?.accessToken);
+      localStorage.setItem("user", JSON.stringify(action?.payload));
+      localStorage.setItem("token", action.payload?.accessToken);
 
       const fireStoreData = { ...action?.payload };
 
@@ -26,8 +26,8 @@ const userSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = null;
-      sessionStorage.removeItem("user");
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     },
   },
 });

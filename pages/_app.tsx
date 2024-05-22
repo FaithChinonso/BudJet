@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
   useEffect(() => {
     const securePage = async () => {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
       if (!token) {
         router.push("/");
