@@ -11,34 +11,6 @@ import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export default function HomePage() {
-  const dispatch = useAppDispatch();
-  const loggedUser = useAppSelector((state) => state.user);
-  const router = useRouter();
-  console.log(loggedUser, "logged");
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(authProvider, (user: any) => {
-  //     console.log(user);
-  //     const data = {
-  //       accessToken: user?.accessToken,
-  //       displayName: user?.displayName || "",
-  //       email: user?.email || "",
-  //       creationTime: user?.metadata?.creationTime || "",
-  //       lastLogin: user?.metadata?.lastSignInTime || "",
-  //       photoUrl: user?.photoURL || "",
-  //       phoneNumber: user?.phoneNumber || "",
-  //       userId: user?.uid,
-  //     };
-  //     if (user) {
-  //       dispatch(getUser(data));
-  //       router.push("/dashboard");
-  //     } else {
-  //       dispatch(getUser(null));
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
   return (
     <div className="w-full h-full flex-col items-center justify-between p-24 flex min-h-screen">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -52,7 +24,6 @@ export default function HomePage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
             <p>
               bud<span>^JET</span>
             </p>

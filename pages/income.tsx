@@ -42,14 +42,14 @@ const Income = () => {
       const newData = {
         ...data,
         id: idd.toString(),
-        userId: loggedUser.userId,
+        userId: loggedUser?.userId,
       };
       console.log(newData);
       await setDoc(doc(db, "transactions", newData.id), newData);
     } else {
       await updateDoc(doc(db, "transactions", editId), {
         ...data,
-        userId: loggedUser.userId,
+        userId: loggedUser?.userId,
       });
     }
     await onClose();

@@ -20,7 +20,7 @@ const Layout = ({ children }: any) => {
     const unsub = onSnapshot(
       query(
         collection(db, "transactions"),
-        where("userId", "==", loggedUser.userId)
+        where("userId", "==", loggedUser?.userId)
       ),
       (s) => {
         if (s.empty) return;
@@ -37,14 +37,14 @@ const Layout = ({ children }: any) => {
     return unsub;
   };
   useEffect(() => {
-    if (loggedUser.userId) {
-      const unsub = watchTransactions(loggedUser.userId);
+    if (loggedUser?.userId) {
+      const unsub = watchTransactions(loggedUser?.userId);
 
       return () => {
         unsub();
       };
     }
-  }, [loggedUser.userId]);
+  }, [loggedUser?.userId]);
   return (
     <div className="min-h-screen max-w-screen overflow-hidden">
       <Grid
