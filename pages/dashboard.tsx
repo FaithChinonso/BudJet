@@ -1,90 +1,126 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Box,
   Button,
   Center,
-  Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Select,
   SimpleGrid,
-  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { FormControl, FormLabel } from "@chakra-ui/react";
-import { Wrap, WrapItem } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
+
+import { Modal, ModalOverlay } from "@chakra-ui/react";
+
 import Layout from "@/components/Layout";
 import { AddIcon } from "@chakra-ui/icons";
-import { dashboardDetails, tableData } from "@/utils";
 import DataFilterTable from "@/components/Table";
-import moment from "moment";
+import Form from "@/components/Form";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useAppSelector } from "@/store";
+import { formatNumberWithCommas } from "@/helpers";
 
 const Dashboard = () => {
-  const loggedUser = useAppSelector((state) => state.user);
+  const storedUser = sessionStorage ? sessionStorage.getItem("user") : null;
+  const loggedUser = storedUser ? JSON.parse(storedUser) : null;
+  const [isEdit, setIsEdit] = useState(false);
+  const [editId, setEditId] = useState("");
+  const {
+    transactions,
+    totalCreditAmount,
+    totalDebitAmount,
+    balance,
+    creditCount,
+    debitCount,
+    highestDebitCategory,
+  } = useAppSelector((state) => state.transactions);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const columnAdmin = [
+
+  const [data, setData] = useState({
+    name: "",
+    desc: "",
+    amount: 0,
+    category: "",
+    type: "",
+    date: "",
+  });
+  const onSubmit = async () => {
+    if (!isEdit) {
+      const idd =
+        Math.random() * 9 +
+        new Date().getSeconds() +
+        data.name +
+        Math.random() * 90;
+      const newData = {
+        ...data,
+        id: idd.toString(),
+        userId: loggedUser.userId,
+      };
+      console.log(newData);
+      await setDoc(doc(db, "transactions", newData.id), newData);
+    } else {
+      await updateDoc(doc(db, "transactions", editId), {
+        ...data,
+        userId: loggedUser.userId,
+      });
+    }
+    await onClose();
+    setData({
+      name: "",
+      desc: "",
+      amount: 0,
+      category: "",
+      type: "",
+      date: "",
+    });
+    setIsEdit(false);
+    setEditId("");
+  };
+
+  const dashboardDetails = [
     {
-      name: "S/N",
-      selector: (row: { sn: any }) => <div>{row.sn}</div>,
+      id: 2,
+      name: "Income",
+      value: formatNumberWithCommas(totalCreditAmount),
+      color: "#ead1dc",
+      textColor: "rgba(0,100,0,1)",
+    },
+    {
+      id: 3,
+      name: "Expenses",
+      value: formatNumberWithCommas(totalDebitAmount),
+      color: "rgba(75,211,165,0.1)",
+      textColor: "rgba(0,100,0,1)",
+    },
+    {
+      id: 1,
+      name: "Balance",
+      value: formatNumberWithCommas(balance),
+      color: "#fff2cc",
+      textColor: "rgba(0,100,0,1)",
     },
 
     {
-      name: "Title",
-      selector: (row: { title: any }) => <div>{row.title}</div>,
+      id: 4,
+      name: "Count",
+      value: debitCount + creditCount,
+      color: "#cfe2f3",
+      textColor: "rgba(0,100,0,1)",
     },
     {
-      name: "Date",
-      selector: (row: { date: any }) => <div>{row.date}</div>,
-      maxWidth: "150px",
-    },
-
-    {
-      name: "Amount",
-      selector: (row: { amount: any }) => <div className="">{row.amount}</div>,
-      maxWidth: "120px",
-    },
-    {
-      name: "Budget",
-      selector: (row: { budget: any }) => <div>{row.budget}</div>,
-    },
-    {
-      name: "Type",
-      selector: (row: { type: any }) => <div className="">{row.type}</div>,
+      id: 5,
+      name: "Highest Category",
+      value: highestDebitCategory || "Nil",
+      color: "#d9d2e9",
+      textColor: "rgba(0,100,0,1)",
     },
   ];
-
-  const formatData = tableData?.slice().map((item: any, index: any) => {
-    return {
-      sn: index + 1,
-      title: `${item?.title} ` || "--",
-      budget: `${item?.budget} ` || "--",
-      date: moment(item?.created_at).format("ll") || "--",
-      amount: item.amount || "--",
-      type: item.type || "--",
-      desc: item?.desc || "--",
-    };
-  });
   return (
     <Layout>
       <div>
         <h1 className="my-4  text-lg text-secondary">
           Welcome{" "}
           <span className="font-light text-xl capitalize">
-            {loggedUser?.user?.displayName},
+            {loggedUser?.displayName},
           </span>
         </h1>
         <Button
@@ -92,85 +128,22 @@ const Dashboard = () => {
           borderRadius="50%"
           onClick={onOpen}
           position="absolute"
-          className="absolute right-4 bottom-2"
+          className="absolute right-4 bottom-2 z-10"
         >
           <AddIcon w={4} h={4} color="white" />
         </Button>
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Add a transaction</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className="flex flex-col space-y-4">
-              <FormControl isRequired>
-                <FormLabel
-                  fontWeight="600"
-                  fontSize="14"
-                  textColor="#013220"
-                  className="font-semibold"
-                >
-                  Name
-                </FormLabel>
-                <Input type="name" />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-                  Transaction Type
-                </FormLabel>
-                <Select placeholder="Select type">
-                  <option>Debit</option>
-                  <option>Credit</option>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-                  Budget
-                </FormLabel>
-                <Select placeholder="Select budget type">
-                  <option>Food</option>
-                  <option>Personal</option>
-                </Select>
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-                  Amount
-                </FormLabel>
-                <NumberInput max={50} min={10}>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-                  Date
-                </FormLabel>
-                <Input type="date" />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-                  More Details
-                </FormLabel>
-                <Textarea
-                  value=""
-                  onChange={() => {}}
-                  placeholder="Type here"
-                  size="sm"
-                />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="red" mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant="ghost">Add</Button>
-            </ModalFooter>
-          </ModalContent>
+          <Form
+            onClose={onClose}
+            onSubmit={onSubmit}
+            data={data}
+            setData={(dat: any) => setData(dat)}
+            isEdit={isEdit}
+          />
         </Modal>
-        <SimpleGrid columns={[1, 3, 5]} spacing={10}>
+        <SimpleGrid columns={[1, 3, 5]} spacing={10} maxW="100vw">
           {dashboardDetails?.map((item) => (
             <Box
               key={item.id}
@@ -195,9 +168,14 @@ const Dashboard = () => {
         </SimpleGrid>
         <div className="mt-8">
           <DataFilterTable
-            data={formatData}
-            column={columnAdmin}
+            data={transactions}
+            setIsEdit={setIsEdit}
+            setEditId={setEditId}
+            setData={(dat: any) => setData(dat)}
+            onOpen={onOpen}
+            editId={editId}
             pageSize={5}
+            expandableRows
           />
         </div>
       </div>

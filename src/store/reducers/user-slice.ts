@@ -1,7 +1,10 @@
+"use client";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-const initialState: any = { user: null };
+const initialState: { user: any } = {
+  user: null,
+};
 const userSlice = createSlice({
   name: "user",
   initialState,

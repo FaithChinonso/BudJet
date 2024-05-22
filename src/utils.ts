@@ -142,3 +142,25 @@ export const tableData = [
     desc: "Did my lashes, nails and pedicure",
   },
 ];
+
+export const categories = [
+  { label: "Food", value: "food" },
+  { label: "Toiletries", value: "toiletries" },
+  { label: "Hair care", value: "hair_care" },
+  { label: "Transportation", value: "transportation" },
+  { label: "Fuel", value: "fuel" },
+  { label: "Light", value: "light" },
+  { label: "House Maintenance", value: "house_maintenance" },
+  { label: "Outing/Hangout", value: "outing_hangout" },
+  { label: "Pedicure/Manicure", value: "pedicure_manicure" },
+  { label: "Beauty Maintenance", value: "beauty_maintenance" },
+  { label: "Cloths", value: "cloths" },
+  { label: "Shoes/Bags", value: "shoes_bags" },
+  { label: "Jewelry", value: "jewelry" },
+  { label: "Junk", value: "junk" },
+  { label: "Black Tax", value: "black_tax" },
+  { label: "Loan", value: "loan" },
+  { label: "Health", value: "health" },
+  { label: "Internet", value: "internet" },
+  { label: "Service Charge", value: "service_charge" },
+];

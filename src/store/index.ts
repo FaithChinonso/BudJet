@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./reducers/user-slice";
+import transactionslice from "./reducers/transactions-slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
+    transactions: transactionslice,
   },
 });
 
