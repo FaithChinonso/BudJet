@@ -8,12 +8,13 @@ import { VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { removeUser } from "@/store/reducers/user-slice";
 import { nav } from "@/utils";
+import { removeTransactions } from "@/store/reducers/transactions-slice";
 
 const Nav = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   return (
-    <div className="pt-[50px] relative items-center  h-full">
+    <div className="pt-[50px] relative items-center  h-screen">
       <VStack divider={<StackDivider />}>
         {nav.map((item) => (
           <Box
@@ -31,6 +32,7 @@ const Nav = () => {
           signOutUser();
           router.push("./");
           dispatch(removeUser());
+          dispatch(removeTransactions());
         }}
       >
         Sign Out

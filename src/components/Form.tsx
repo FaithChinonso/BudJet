@@ -28,7 +28,7 @@ const Form = ({ onClose, onSubmit, setData, data, isEdit }: any) => {
   console.log(data, "form");
 
   return (
-    <ModalContent>
+    <ModalContent width={{ base: "80vw", md: "450px", lg: "450px" }}>
       <ModalHeader>
         {isEdit ? "Update Transaction" : "Add a transaction"}
       </ModalHeader>

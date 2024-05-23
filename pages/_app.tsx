@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
   useEffect(() => {
     const securePage = async () => {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       if (!token) {
         router.push("/");
@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
     };
     securePage();
   }, [router]);
+
   if (!mounted) return <></>;
   return (
     mounted && (
@@ -36,8 +37,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <title>BudJET</title>
           <meta name="description" content="Best Budget app in the world!" />
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="mask-icon" href="/vercel.svg" color="#FFFFFF" />
-          <meta name="theme-color" content="#006400" />
+          <link rel="mask-icon" href="/budget-logo.svg" color="#FFFFFF" />
+          <meta name="theme-color" content="#013220" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link
             rel="apple-touch-icon"

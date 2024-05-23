@@ -2,8 +2,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-const initialState: { user: any } = {
+const initialState: { user: any; userId: any; token: any } = {
   user: null,
+  userId: null,
+  token: null,
 };
 const userSlice = createSlice({
   name: "user",
@@ -12,8 +14,9 @@ const userSlice = createSlice({
     getUser: (state, action: PayloadAction<any>) => {
       console.log(action.payload);
       state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action?.payload));
-      localStorage.setItem("token", action.payload?.accessToken);
+      state.token = action.payload?.accessToken;
+      sessionStorage.setItem("user", JSON.stringify(action?.payload));
+      sessionStorage.setItem("token", action.payload?.accessToken);
 
       const fireStoreData = { ...action?.payload };
 
@@ -24,13 +27,20 @@ const userSlice = createSlice({
         actionn();
       }
     },
+    setUserId: (state, action: PayloadAction<any>) => {
+      state.userId = action.payload;
+      sessionStorage.setItem("userId", JSON.stringify(action?.payload));
+    },
     removeUser: (state) => {
       state.user = null;
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      state.userId = null;
+      state.token = null;
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
     },
   },
 });
-export const { getUser, removeUser } = userSlice.actions;
+export const { getUser, removeUser, setUserId } = userSlice.actions;
 
 export default userSlice.reducer;

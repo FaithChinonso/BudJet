@@ -65,8 +65,19 @@ const transactionslice = createSlice({
       state.debitCount = debitCount;
       state.highestDebitCategory = highestDebitCategory;
     },
+    removeTransactions: (state) => {
+      state.transactions = [];
+      state.credit = [];
+      state.debit = [];
+      state.totalCreditAmount = 0;
+      state.totalDebitAmount = 0;
+      state.balance = 0;
+      state.creditCount = 0;
+      state.debitCount = 0;
+      state.highestDebitCategory = "";
+    },
   },
 });
-export const { getTransactions } = transactionslice.actions;
+export const { getTransactions, removeTransactions } = transactionslice.actions;
 
 export default transactionslice.reducer;

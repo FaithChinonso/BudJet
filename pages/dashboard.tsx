@@ -18,7 +18,7 @@ import { useAppSelector } from "@/store";
 import { formatNumberWithCommas } from "@/helpers";
 
 const Dashboard = () => {
-  const storedUser = localStorage.getItem("user");
+  const storedUser = sessionStorage.getItem("user");
   const loggedUser = storedUser ? JSON.parse(storedUser) : null;
   const [isEdit, setIsEdit] = useState(false);
   const [editId, setEditId] = useState("");
@@ -114,27 +114,31 @@ const Dashboard = () => {
   ];
   return (
     <Layout>
-      <div>
+      <Button
+        bg="#006400"
+        borderRadius="50%"
+        onClick={() => onOpen()}
+        position="absolute"
+        className="absolute right-4 bottom-2 z-10"
+      >
+        <AddIcon w={4} h={4} color="white" />
+      </Button>
+      <div className="relative max-h-[calc(100vh-100px)] h-[calc(100vh-60px)] overflow-scroll">
         <h1 className="my-4  text-lg text-secondary">
           Welcome{" "}
           <span className="font-light text-xl capitalize">
             {loggedUser?.displayName},
           </span>
         </h1>
-        <Button
-          bg="#006400"
-          borderRadius="50%"
-          onClick={onOpen}
-          position="absolute"
-          className="absolute right-4 bottom-2 z-10"
-        >
-          <AddIcon w={4} h={4} color="white" />
-        </Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <Form
-            onClose={onClose}
+            onClose={() => {
+              setIsEdit(false);
+              setEditId("");
+              onClose();
+            }}
             onSubmit={onSubmit}
             data={data}
             setData={(dat: any) => setData(dat)}

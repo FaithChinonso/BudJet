@@ -7,6 +7,7 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 import { useAppDispatch } from "@/store";
 import { signOutUser } from "@/services/Auth";
@@ -30,17 +31,14 @@ const ResponsiveNav = ({ onClose }: any) => {
       className="min-h-screen"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <a
-          className="pointer-events-none flex place-items-center gap-2  lg:pointer-events-auto lg:p-0 flex-1 text-white text-center"
-          href=""
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          By{" "}
-          <p>
-            bud<span>^JET</span>
-          </p>
-        </a>
+        <Image
+          src="/white-logo.png"
+          alt="logo"
+          width={100}
+          height={40}
+          priority
+          className=" p-2 rounded-2xl"
+        />
         <CloseButton
           color="#fff"
           display={{ base: "flex", md: "none" }}
