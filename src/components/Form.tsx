@@ -55,7 +55,7 @@ const Form = ({ onClose, onSubmit, setData, data, isEdit }: any) => {
           </FormLabel>
           <Select
             placeholder="Select type"
-            value={data?.name}
+            value={data?.category}
             onChange={(e) => {
               setData({ ...data, type: e.target.value });
               if (e.target.value === "credit") {
