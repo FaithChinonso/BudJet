@@ -8,14 +8,14 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem("token");
-  //   if (token && router?.pathname === "/") {
-  //     router.push("dashboard");
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [router]);
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token && router?.pathname === "/") {
+      router.push("dashboard");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
 
   return (
     <main className=" ">
