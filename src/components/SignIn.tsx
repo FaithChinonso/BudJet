@@ -25,7 +25,9 @@ const SignIn = () => {
       };
       dispatch(getUser(data));
       dispatch(setUserId(res?.uid));
-      router.push("dashboard");
+      if (res.accessToken) {
+        router.push("dashboard");
+      }
     } else {
       dispatch(getUser(null));
       dispatch(setUserId(null));
