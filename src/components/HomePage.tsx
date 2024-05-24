@@ -12,7 +12,7 @@ export default function HomePage() {
           Do you want to take control of your finances?
         </p>
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <Image src="/logo.png" alt="logo" width={100} height={100} priority />
+          <Image src="/logo.png" alt="logo" width={100} height={100} />
         </div>
       </div>
       <div>

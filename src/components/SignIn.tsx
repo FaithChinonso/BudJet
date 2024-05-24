@@ -25,6 +25,7 @@ const SignIn = () => {
       };
       dispatch(getUser(data));
       dispatch(setUserId(res?.uid));
+      router.push("dashboard");
     } else {
       dispatch(getUser(null));
       dispatch(setUserId(null));
@@ -35,7 +36,7 @@ const SignIn = () => {
     <div>
       <button
         className="hover:border-white bg-secondary text-light-green hover:text-secondary  hover:border p-3 rounded-lg mb-6 hover:bg-tertiary01"
-        onClick={login}
+        onClick={() => login()}
       >
         Sign in with Google
       </button>

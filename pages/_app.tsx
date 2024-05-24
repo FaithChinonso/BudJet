@@ -26,46 +26,43 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     };
     securePage();
-  }, [router]);
+  }, []);
 
-  if (!mounted) return <></>;
   return (
-    mounted && (
-      <>
-        <Head>
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
-          <title>BudJET</title>
-          <meta name="description" content="Best Budget app in the world!" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="mask-icon" href="/budget-logo.svg" color="#FFFFFF" />
-          <meta name="theme-color" content="#013220" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link
-            rel="apple-touch-icon"
-            sizes="152x152"
-            href="/touch-touch-icon.png"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon.png"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="167x167"
-            href="/apple-touch-icon.png"
-          />
-          <link rel="manifest" href="/manifest.json" />
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>BudJET</title>
+        <meta name="description" content="Best Budget app in the world!" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="mask-icon" href="/budget-logo.svg" color="#FFFFFF" />
+        <meta name="theme-color" content="#013220" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="152x152"
+          href="/touch-touch-icon.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="167x167"
+          href="/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
 
-          {/* add the following only if you want to add a startup image for Apple devices. */}
-        </Head>
+        {/* add the following only if you want to add a startup image for Apple devices. */}
+      </Head>
 
-        <UiProviders>
-          <Provider store={store}>
-            <Component {...pageProps} />
-          </Provider>
-        </UiProviders>
-      </>
-    )
+      <UiProviders>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </UiProviders>
+    </>
   );
 }
