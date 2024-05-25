@@ -149,7 +149,7 @@ const Dashboard = () => {
       >
         <AddIcon w={4} h={4} color="white" />
       </Button>
-      <div className="relative max-h-[calc(100vh-100px)] h-[calc(100vh-60px)] overflow-scroll">
+      <div className="relative max-h-[calc(100vh-140px)] h-[calc(100vh-140px)] overflow-scroll">
         <div className="flex flex-col justify-between items-center w-full bg-red md:flex-row mb-8">
           <h1 className="my-4  text-lg text-secondary flex-1">
             Welcome{" "}

@@ -103,7 +103,7 @@ const Layout = ({ children }: any) => {
           area={"main"}
           position="relative"
           maxWidth="100vw"
-          maxHeight="calc(100vh - 60px)"
+          maxHeight="calc(100vh - 140px)"
         >
           {children}
         </GridItem>

@@ -82,7 +82,7 @@ const Income = () => {
       >
         <AddIcon w={4} h={4} color="white" />
       </Button>
-      <div className="relative max-h-[calc(100vh-100px)] h-[calc(100vh-60px)] overflow-scroll">
+      <div className="relative max-h-[calc(100vh-140px)] h-[calc(100vh-140px)] overflow-scroll">
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <Form
