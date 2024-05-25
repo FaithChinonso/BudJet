@@ -22,6 +22,9 @@ import { formatNumberWithCommas, generateMonthlyData } from "@/helpers";
 import moment from "moment";
 import { MonthlyData, Transaction } from "@/utils";
 import { getFilteredTransactions } from "@/store/reducers/transactions-slice";
+import AreaChartComp from "@/components/AreaChart";
+import { PieChart } from "recharts";
+import PieChartComp from "@/components/PieChart";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -128,7 +131,7 @@ const Dashboard = () => {
     const joined = moment(loggedUser?.creationTime).format("ll");
     const newData = generateMonthlyData(joined, transactions);
     console.log(generateMonthlyData(joined, transactions));
-
+    setDisplay(transactions);
     setDisplayData(newData);
   }, [transactions]);
   useEffect(() => {
@@ -156,6 +159,7 @@ const Dashboard = () => {
           </h1>
           <FormControl className="max-w-[150px] ">
             <Select
+              defaultValue={JSON?.stringify(transactions)}
               placeholder="Filter By Month"
               onChange={(e) => {
                 setDisplay(JSON?.parse(e.target.value));
@@ -211,6 +215,10 @@ const Dashboard = () => {
             </Box>
           ))}
         </SimpleGrid>
+        <div className="flex w-full my-6 flex-col md:flex-row items-center">
+          <AreaChartComp transactions={display} />
+          <PieChartComp transactions={display} />
+        </div>
         <div className="mt-8">
           <DataFilterTable
             data={display}

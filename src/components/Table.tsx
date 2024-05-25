@@ -93,7 +93,7 @@ export const DataFilterTable = ({
       name: "Type",
       selector: (row: { type: any }) => (
         <div
-          style={{ color: row.type === "credit" ? "#006400" : "#ff6400" }}
+          style={{ color: row.type === "credit" ? "#006400" : "#ff2420" }}
           className="capitalize"
         >
           {row.type}
