@@ -149,6 +149,7 @@ export const categories = [
   { label: "Hair care", value: "hair_care" },
   { label: "Transportation", value: "transportation" },
   { label: "Fuel", value: "fuel" },
+  { label: "Laundry", value: "laundry" },
   { label: "Light", value: "light" },
   { label: "House Maintenance", value: "house_maintenance" },
   { label: "Outing/Hangout", value: "outing_hangout" },
@@ -159,8 +160,35 @@ export const categories = [
   { label: "Jewelry", value: "jewelry" },
   { label: "Junk", value: "junk" },
   { label: "Black Tax", value: "black_tax" },
+  { label: "Gift", value: "gift" },
   { label: "Loan", value: "loan" },
+  { label: "Debt", value: "debt" },
   { label: "Health", value: "health" },
   { label: "Internet", value: "internet" },
+  { label: "Investment", value: "investment" },
+  { label: "Savings", value: "savings" },
+  { label: "Monthly Contribution", value: "monthly_contribution" },
   { label: "Service Charge", value: "service_charge" },
 ];
+export const creditCategory = [
+  { label: "Salary", value: "salary" },
+  { label: "Gift", value: "gift" },
+  { label: "Loan", value: "loan" },
+  { label: "Investment", value: "Investment" },
+  { label: "Savings", value: "Savings" },
+  { label: "Freelance", value: "freelance" },
+];
+export interface Transaction {
+  date: string;
+  id: number;
+  name: string;
+  amount: number;
+  type: string;
+  userId: string;
+  desc: string;
+  category: string;
+}
+export interface MonthlyData {
+  month: string;
+  data: Transaction[];
+}

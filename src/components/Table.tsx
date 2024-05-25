@@ -27,6 +27,7 @@ import {
 import moment from "moment";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import ActionMenu from "./ActionMenu";
 
 export const DataFilterTable = ({
   data = [],
@@ -36,6 +37,7 @@ export const DataFilterTable = ({
   onOpen,
   setData,
   editId,
+  type = "outer",
 }: any) => {
   createTheme("solarized", {
     striped: {
@@ -58,18 +60,19 @@ export const DataFilterTable = ({
     {
       name: "S/N",
       selector: (row: { sn: any }) => <div>{row.sn}</div>,
-      maxwidth: "50px",
+      maxwidth: "70px",
+      width: "70px",
     },
 
     {
       name: "Title",
       selector: (row: { name: any }) => <div>{row.name}</div>,
+      maxwidth: "200px",
+      width: "200px",
     },
     {
       name: "Date",
-      selector: (row: { date: any }) => (
-        <div>{moment(row.date).format("ll")}</div>
-      ),
+      selector: (row: { date: any }) => <div>{row.date}</div>,
       maxwidth: "150px",
     },
 
@@ -82,50 +85,36 @@ export const DataFilterTable = ({
     },
     {
       name: "Category",
-      selector: (row: { category: any }) => <div>{row.category}</div>,
+      selector: (row: { category: any }) => (
+        <div className="capitalize">{row.category}</div>
+      ),
     },
     {
       name: "Type",
-      selector: (row: { type: any }) => <div className="">{row.type}</div>,
+      selector: (row: { type: any }) => (
+        <div
+          style={{ color: row.type === "credit" ? "#006400" : "#ff6400" }}
+          className="capitalize"
+        >
+          {row.type}
+        </div>
+      ),
+      omit: type === "inner",
     },
     {
       name: "Actions",
+      maxwidth: "100px",
+      width: "100px",
       cell: (prop: any) => {
         return (
-          <Menu>
-            <MenuButton
-              as={Button}
-              bg="transparent"
-              _active={{ backgroundColor: "#F8FFFC" }}
-              _hover={{ backgroundColor: "#F8FFFC" }}
-            >
-              <FaEllipsisVertical color="#013220" />
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                onClick={() => {
-                  setIsEdit(true);
-                  setEditId(prop.id);
-                  onOpen();
-                  setData({ ...prop });
-                }}
-                _hover={{ backgroundColor: "#F8FFFC", color: "#013220" }}
-                color="#006400"
-              >
-                Edit
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  setEditId(prop.id);
-                  onSecondModalOpen();
-                }}
-                _hover={{ backgroundColor: "#F8FFFC", color: "#990000" }}
-                color="#006400"
-              >
-                Delete
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <ActionMenu
+            setIsEdit={setIsEdit}
+            setEditId={setEditId}
+            onOpen={onOpen}
+            setData={setData}
+            prop={prop}
+            onSecondModalOpen={onSecondModalOpen}
+          />
         );
       },
     },
@@ -135,7 +124,7 @@ export const DataFilterTable = ({
       sn: index + 1,
       name: `${item?.name} ` || "--",
       category: `${item?.category} ` || "--",
-      date: item?.date || "--",
+      date: moment(item.date).format("ll") || "--",
       amount: item.amount || "--",
       id: item.id || "0",
       type: item.type || "--",

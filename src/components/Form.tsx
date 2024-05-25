@@ -22,15 +22,17 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { categories } from "@/utils";
+import { categories, creditCategory } from "@/utils";
 
-const Form = ({ onClose, onSubmit, setData, data, isEdit }: any) => {
+const Form = ({ onClose, onSubmit, setData, data, isEdit, category }: any) => {
   console.log(data, "form");
 
   return (
     <ModalContent width={{ base: "80vw", md: "450px", lg: "450px" }}>
       <ModalHeader>
-        {isEdit ? "Update Transaction" : "Add a transaction"}
+        {isEdit
+          ? "Update Transaction"
+          : `Add ${category === "all" ? "a" : category} transaction`}
       </ModalHeader>
       <ModalCloseButton />
       <ModalBody className="flex flex-col space-y-4">
@@ -49,45 +51,50 @@ const Form = ({ onClose, onSubmit, setData, data, isEdit }: any) => {
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-            Transaction Type
-          </FormLabel>
-          <Select
-            placeholder="Select type"
-            value={data?.category}
-            onChange={(e) => {
-              setData({ ...data, type: e.target.value });
-              if (e.target.value === "credit") {
-                setData({ ...data, type: e.target.value, category: "credit" });
-              }
-            }}
-          >
-            <option value="debit">Debit</option>
-            <option value="credit">Credit</option>
-          </Select>
-        </FormControl>
-        {data.type === "debit" ? (
+        {category === "all" ? (
           <FormControl isRequired>
             <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
-              Category
+              Transaction Type
             </FormLabel>
             <Select
-              placeholder="Select category"
-              value={data.category}
-              onChange={(e) => setData({ ...data, category: e.target.value })}
+              placeholder="Select type"
+              value={data?.type}
+              onChange={(e) => {
+                setData({ ...data, type: e.target.value });
+                if (e.target.value === "credit") {
+                  setData({
+                    ...data,
+                    type: e.target.value,
+                    category: "credit",
+                  });
+                }
+              }}
             >
-              <option value="" disabled>
-                Select category
-              </option>
-              {categories.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
+              <option value="debit">Debit</option>
+              <option value="credit">Credit</option>
             </Select>
           </FormControl>
         ) : null}
+
+        <FormControl isRequired>
+          <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
+            Category
+          </FormLabel>
+          <Select
+            placeholder="Select category"
+            value={data?.category}
+            onChange={(e) => setData({ ...data, category: e.target.value })}
+          >
+            {(data.type === "debit" ? categories : creditCategory)?.map(
+              (category) => (
+                <option key={category.value} value={category.value}>
+                  {category.label}
+                </option>
+              )
+            )}
+          </Select>
+        </FormControl>
+
         <FormControl isRequired>
           <FormLabel fontWeight="600" fontSize="14" textColor="#013220">
             Amount

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="flex justify-end items-center">
       <Text fontSize={"sm"} color="#013220">
-        © 2022 Bud^JET. All rights reserved
+        © 2024 Bud^JET. All rights reserved
       </Text>
 
       <a href="" target="_blank" rel="noopener noreferrer">

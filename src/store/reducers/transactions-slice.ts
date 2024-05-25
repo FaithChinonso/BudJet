@@ -21,6 +21,54 @@ const transactionslice = createSlice({
       state.transactions = action.payload;
 
       // Filter credit and debit transactions
+      const credit = action.payload
+        .filter((item: any) => item.type === "credit")
+        .reverse();
+      const debit = action.payload
+        .filter((item: any) => item.type === "debit")
+        .reverse();
+
+      // Calculate total credit amount and count
+      const totalCreditAmount = credit.reduce(
+        (total: number, item: any) => total + item.amount,
+        0
+      );
+      const creditCount = credit.length;
+
+      // Calculate total debit amount and count
+      const totalDebitAmount = debit.reduce(
+        (total: number, item: any) => total + item.amount,
+        0
+      );
+      const debitCount = debit.length;
+
+      // Determine the highest amount category for debits
+      const debitCategoryAmounts: Record<string, number> = {};
+      debit.forEach((item: any) => {
+        if (debitCategoryAmounts[item.category]) {
+          debitCategoryAmounts[item.category] += item.amount;
+        } else {
+          debitCategoryAmounts[item.category] = item.amount;
+        }
+      });
+
+      const highestDebitCategory = Object.keys(debitCategoryAmounts).reduce(
+        (a, b) => (debitCategoryAmounts[a] > debitCategoryAmounts[b] ? a : b),
+        ""
+      );
+
+      // Update state
+      state.credit = credit;
+      state.debit = debit;
+      state.balance = totalCreditAmount - totalDebitAmount;
+      state.totalCreditAmount = totalCreditAmount;
+      state.totalDebitAmount = totalDebitAmount;
+      state.creditCount = creditCount;
+      state.debitCount = debitCount;
+      state.highestDebitCategory = highestDebitCategory;
+    },
+    getFilteredTransactions: (state, action: PayloadAction<any>) => {
+      // Filter credit and debit transactions
       const credit = action.payload.filter(
         (item: any) => item.type === "credit"
       );
@@ -78,6 +126,7 @@ const transactionslice = createSlice({
     },
   },
 });
-export const { getTransactions, removeTransactions } = transactionslice.actions;
+export const { getTransactions, removeTransactions, getFilteredTransactions } =
+  transactionslice.actions;
 
 export default transactionslice.reducer;
