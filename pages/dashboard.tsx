@@ -215,11 +215,11 @@ const Dashboard = () => {
             </Box>
           ))}
         </SimpleGrid>
-        <div className="flex w-full my-6 flex-col md:flex-row items-center">
+        <div className="flex w-full my-8 flex-col md:flex-row items-center gap-6">
           <AreaChartComp transactions={display} />
           <PieChartComp transactions={display} />
         </div>
-        <div className="mt-8">
+        <div className="mt-4">
           <DataFilterTable
             data={display}
             setIsEdit={setIsEdit}

@@ -93,55 +93,63 @@ const AreaChartComp = ({ transactions }: { transactions: Transaction[] }) => {
     : transformTransactionsMonthly(transactions);
 
   return (
-    <ResponsiveContainer height={300} width="100%">
-      <AreaChart
-        data={transformedData}
-        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-      >
-        <defs>
-          <linearGradient id="colorDebit" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#ff2420" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#ff2420" stopOpacity={0} />
-          </linearGradient>
-          <linearGradient id="colorCredit" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <XAxis
-          dataKey={isWithinSingleMonth ? "date" : "month"}
-          tick={axisTickStyle}
-          tickFormatter={(value: string) => moment(value).format("ll")}
-        />
-        <YAxis
-          tick={axisTickStyle}
-          tickFormatter={(value: number) =>
-            formatNumberWithCommas(value.toString())
-          }
-        />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip
-          formatter={(value: number) =>
-            formatNumberWithCommas(value.toString())
-          }
-        />
-        <Area
-          type="monotone"
-          dataKey="debit"
-          stroke="#ff2420"
-          fillOpacity={1}
-          fill="url(#colorDebit)"
-        />
-        <Area
-          type="monotone"
-          dataKey="credit"
-          stroke="#82ca9d"
-          fillOpacity={1}
-          fill="url(#colorCredit)"
-        />
-        <Legend />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div className="w-full">
+      {transactions.length === 0 ? (
+        <div className="text-secondary w-full h-[300px] flex items-center justify-center bg-light-green">
+          <p>No transactions available</p>
+        </div>
+      ) : (
+        <ResponsiveContainer height={300} width="100%">
+          <AreaChart
+            data={transformedData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorDebit" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ff2420" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#ff2420" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorCredit" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey={isWithinSingleMonth ? "date" : "month"}
+              tick={axisTickStyle}
+              tickFormatter={(value: string) => moment(value).format("ll")}
+            />
+            <YAxis
+              tick={axisTickStyle}
+              tickFormatter={(value: number) =>
+                formatNumberWithCommas(value.toString())
+              }
+            />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip
+              formatter={(value: number) =>
+                formatNumberWithCommas(value.toString())
+              }
+            />
+            <Area
+              type="monotone"
+              dataKey="debit"
+              stroke="#ff2420"
+              fillOpacity={1}
+              fill="url(#colorDebit)"
+            />
+            <Area
+              type="monotone"
+              dataKey="credit"
+              stroke="#82ca9d"
+              fillOpacity={1}
+              fill="url(#colorCredit)"
+            />
+            <Legend />
+          </AreaChart>
+        </ResponsiveContainer>
+      )}
+    </div>
   );
 };
 
