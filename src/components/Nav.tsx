@@ -28,8 +28,8 @@ const Nav = () => {
       </VStack>
       <button
         className="  py-3 rounded-lg mb-6 hover:bg-tertiary02 text-white absolute bottom-4 w-full"
-        onClick={() => {
-          signOutUser();
+        onClick={async () => {
+          await signOutUser();
           router.push("./");
           dispatch(removeUser());
           dispatch(removeTransactions());

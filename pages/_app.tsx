@@ -59,12 +59,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
           {/* add the following only if you want to add a startup image for Apple devices. */}
         </Head>
-
-        <UiProviders>
-          <Provider store={store}>
+        <Provider store={store}>
+          <UiProviders>
             <Component {...pageProps} />
-          </Provider>
-        </UiProviders>
+          </UiProviders>
+        </Provider>
       </>
     )
   );

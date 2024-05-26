@@ -27,3 +27,6 @@
     text-wrap: balance;
   }
 }
+.rdt_Table {
+  z-index: 1;
+}

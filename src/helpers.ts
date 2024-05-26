@@ -1,3 +1,4 @@
+import moment from "moment";
 import { MonthlyData, Transaction } from "./utils";
 
 export function formatNumberWithCommas(number: string) {
@@ -70,4 +71,14 @@ export function generateMonthlyData(
   }
 
   return result;
+}
+export function capitalizeAndRemoveUnderscore(text: string): string {
+  // Remove underscores and capitalize the text
+  return text
+    .split("_") // Split the text by underscores
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
+    .join(" "); // Join the words back with spaces
+}
+export function convertToDateFormat(dateString: string): string {
+  return moment(dateString, "MMMM DD, YYYY").format("YYYY-MM-DD");
 }

@@ -104,8 +104,8 @@ const Header = ({ loggedUser }: any) => {
               color: "#013220",
             }}
             fontSize="10px"
-            onClick={() => {
-              signOutUser();
+            onClick={async () => {
+              await signOutUser();
               router.push("./");
               dispatch(removeUser());
               dispatch(removeTransactions());

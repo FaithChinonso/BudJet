@@ -3,7 +3,10 @@ import DataTable, { createTheme } from "react-data-table-component";
 import EmptyTable from "./EmptyTable";
 import { customStyle } from "@/utils";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import { formatNumberWithCommas } from "@/helpers";
+import {
+  capitalizeAndRemoveUnderscore,
+  formatNumberWithCommas,
+} from "@/helpers";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -86,7 +89,9 @@ export const DataFilterTable = ({
     {
       name: "Category",
       selector: (row: { category: any }) => (
-        <div className="capitalize">{row.category}</div>
+        <div className="capitalize">
+          {capitalizeAndRemoveUnderscore(row?.category)}
+        </div>
       ),
     },
     {
@@ -158,7 +163,9 @@ export const DataFilterTable = ({
         onClose={onSecondModalClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent
+            width={{ base: "80vw", md: "450px", lg: "450px" }}
+          >
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Transaction
             </AlertDialogHeader>

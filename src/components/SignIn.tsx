@@ -7,32 +7,12 @@ import { useRouter } from "next/router";
 import { getUser, setUserId } from "@/store/reducers/user-slice";
 
 const SignIn = () => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
   const login = async () => {
-    const res = await signInWithGoogle(dispatch, router);
-
-    if (res) {
-      const data = {
-        accessToken: res?.accessToken,
-        displayName: res?.displayName || "",
-        email: res?.email || "",
-        creationTime: res?.metadata?.creationTime || "",
-        lastLogin: res?.metadata?.lastSignInTime || "",
-        photoUrl: res?.photoURL || "",
-        phoneNumber: res?.phoneNumber || "",
-        userId: res?.uid,
-      };
-      dispatch(getUser(data));
-      dispatch(setUserId(res?.uid));
-      if (res.accessToken) {
-        router.push("dashboard");
-      }
-    } else {
-      dispatch(getUser(null));
-      dispatch(setUserId(null));
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.log(error, "res");
     }
-    console.log(res, "res");
   };
   return (
     <div>

@@ -1,3 +1,4 @@
+import { capitalizeAndRemoveUnderscore, convertToDateFormat } from "@/helpers";
 import { Transaction } from "@/utils";
 import React from "react";
 import {
@@ -26,7 +27,10 @@ const PieChartComp = ({ transactions }: { transactions: Transaction[] }) => {
     });
 
     const sortedCategories = Object.entries(categoryMap)
-      .map(([name, value]) => ({ name, value }))
+      .map(([name, value]) => ({
+        name: capitalizeAndRemoveUnderscore(name),
+        value,
+      }))
       .sort((a, b) => b.value - a.value);
 
     return sortedCategories.slice(0, 5);

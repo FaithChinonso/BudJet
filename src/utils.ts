@@ -166,6 +166,7 @@ export const categories = [
   { label: "Health", value: "health" },
   { label: "Internet", value: "internet" },
   { label: "Investment", value: "investment" },
+  { label: "Offering/Tithe/Seed", value: "offering_tithe_seed" },
   { label: "Savings", value: "savings" },
   { label: "Monthly Contribution", value: "monthly_contribution" },
   { label: "Service Charge", value: "service_charge" },

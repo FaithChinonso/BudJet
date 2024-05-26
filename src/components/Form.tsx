@@ -82,7 +82,7 @@ const Form = ({ onClose, onSubmit, setData, data, isEdit, category }: any) => {
           </FormLabel>
           <Select
             placeholder="Select category"
-            value={data?.category}
+            value={data?.category.trim()}
             onChange={(e) => setData({ ...data, category: e.target.value })}
           >
             {(data.type === "debit" ? categories : creditCategory)?.map(

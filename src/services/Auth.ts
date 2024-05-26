@@ -5,14 +5,13 @@ import {
   signOut,
   onAuthStateChanged as _onAuthStateChanged,
 } from "firebase/auth";
-import { authProvider, provider } from "../../firebase";
+import { authProvider } from "../../firebase";
 
 import { getUser } from "@/store/reducers/user-slice";
-export const signInWithGoogle = async (dispatch: any, router: any) => {
+export const signInWithGoogle = async () => {
   try {
-    const result: any = await signInWithPopup(authProvider, provider);
-    console.log(result.user);
-    return result?.user;
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(authProvider, provider);
   } catch (error) {
     console.error(error);
   }

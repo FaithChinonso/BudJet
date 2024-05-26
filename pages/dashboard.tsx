@@ -36,6 +36,7 @@ const Dashboard = () => {
   const [editId, setEditId] = useState("");
   const {
     transactions,
+    debit,
     totalCreditAmount,
     totalDebitAmount,
     balance,
@@ -217,7 +218,7 @@ const Dashboard = () => {
         </SimpleGrid>
         <div className="flex w-full my-8 flex-col md:flex-row items-center gap-6">
           <AreaChartComp transactions={display} />
-          <PieChartComp transactions={display} />
+          <PieChartComp transactions={debit} />
         </div>
         <div className="mt-4">
           <DataFilterTable
