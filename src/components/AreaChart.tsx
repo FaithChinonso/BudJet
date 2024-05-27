@@ -1,4 +1,4 @@
-import { formatNumberWithCommas } from "@/helpers";
+import { convertToDateFormat, formatNumberWithCommas } from "@/helpers";
 import { Transaction } from "@/utils";
 import moment from "moment";
 import React from "react";
@@ -40,8 +40,8 @@ function transformTransactionsDaily(transactions: Transaction[]): DailyData[] {
 
   transactions.forEach((transaction) => {
     const date = new Date(transaction.date);
-    const dateKey = date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-
+    const dateKey = convertToDateFormat(date); // Format as YYYY-MM-DD
+    console.log(date, dateKey, new Date("2024-05-21"));
     if (!result[dateKey]) {
       result[dateKey] = { date: dateKey, debit: 0, credit: 0 };
     }
@@ -91,7 +91,7 @@ const AreaChartComp = ({ transactions }: { transactions: Transaction[] }) => {
   const transformedData = isWithinSingleMonth
     ? transformTransactionsDaily(transactions)
     : transformTransactionsMonthly(transactions);
-
+  console.log(transactions, "transformedData", transformedData);
   return (
     <div className="w-full">
       {transactions.length === 0 ? (

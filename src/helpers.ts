@@ -79,6 +79,6 @@ export function capitalizeAndRemoveUnderscore(text: string): string {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
     .join(" "); // Join the words back with spaces
 }
-export function convertToDateFormat(dateString: string): string {
+export function convertToDateFormat(dateString: any): string {
   return moment(dateString, "MMMM DD, YYYY").format("YYYY-MM-DD");
 }
